@@ -1,0 +1,164 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <style>
+        /* 将CSS样式写在这里 */
+        .register-header {
+        text-align: center; /* 标题居中 */
+        background-color: #4CAF50; /* 背景颜色 */
+        color: white; /* 字体颜色 */
+        padding: 10px 0; /* 上下填充 */
+        margin-bottom: 20px; /* 下方边距 */
+        
+        }
+        .button {
+            background-color: #4CAF50; /* 绿色 */
+            border: 1px solid green;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #3e8e41;
+        }
+        .login-header h1 {
+            margin: 0; /* 移除默认边距 */
+            font-family: Arial, sans-serif; /* 字体 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="register-header">
+        <h1>Register</h1>
+    </div>
+    <form method="POST" action="registerCheck.php" id="registrationForm">
+        <table border="1" align="center" width="420" height="420">
+            <tr align="center">
+                <td>
+                    <table border="0" width="400" height="600">
+                        <tr height="40">
+                            <td width="140" align="right" style="font-size:12px">Username：</td>
+                            <td><input name="username" type="text" required maxlength="50"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td width="140" align="right" style="font-size:12px">Password：</td>
+                            <td><input name="password" type="password" required /></td>
+                        </tr>
+                        <tr height="40">
+                            <td width="140" align="right" style="font-size:12px">Confirm Password：</td>
+                            <td><input name="confirm_password" type="password" required /></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">Street:</td>
+                            <td><input name="street" type="text" required maxlength="20"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">City:</td>
+                            <td><input name="city" type="text" required maxlength="20"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">State:</td>
+                            <td><input name="state" type="text" pattern="[A-Z]{2}" title="State must be 2 uppercase letters" required maxlength="2"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">Zipcode:</td>
+                            <td><input name="zipcode" type="text" pattern="\d{5}" title="Zipcode should be 5 digits" required maxlength="5"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">Email:</td>
+                            <td><input name="email" type="email" required maxlength="30"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">Phone Number:</td>
+                            <td><input name="phonenum" type="tel" required maxlength="10"/></td>
+                        </tr>
+                        <tr height="40">
+                            <td align="right" style="font-size:12px">Customer Type:</td>
+                            <td>
+                                <select name="customer_type" id="customerType" onchange="showFields()" required>
+                                    <option value="">Select Type</option>
+                                    <option value="I">Individual</option>
+                                    <option value="C">Corporation</option>
+                                </select>
+                            </td>
+                        </tr>
+
+
+                        <tr height="40" id="individualFName" style="display:none;">
+                            <td align="right" style="font-size:12px">First Name:</td>
+                            <td><input name="individual_fname" type="text" maxlength="20"/></td>
+                        </tr>
+                        <tr height="40" id="individualLName" style="display:none;">
+                            <td align="right" style="font-size:12px">Last Name:</td>
+                            <td><input name="individual_lname" type="text" maxlength="20"/></td>
+                        </tr>
+                        <tr height="40" id="individualDlnum" style="display:none;">
+                            <td align="right" style="font-size:12px">Driver License :</td>
+                            <td><input name="individual_dlnum" type="text" maxlength="9"/></td>
+                        </tr>
+                        <tr height="40" id="individualInsurance" style="display:none;">
+                            <td align="right" style="font-size:12px">Insurance Company Name:</td>
+                            <td><input name="individual_insurance" type="text" maxlength="20"/></td>
+                        </tr>
+                        <tr height="40" id="individualPolicynum" style="display:none;">
+                            <td align="right" style="font-size:12px">Policy Number:</td>
+                            <td><input name="individual_policynum" type="text" maxlength="11"/></td>
+                        </tr>
+
+
+                        <tr height="40" id="corporationName" style="display:none;">
+                            <td align="right" style="font-size:12px">Corporation Name:</td>
+                            <td><input name="corporation_name" type="text" maxlength="20"/></td>
+                        </tr>
+                        <tr height="40" id="corporationRegnum" style="display:none;">
+                            <td align="right" style="font-size:12px">Corporation Registration Number:</td>
+                            <td><input name="corporation_regnum" type="text" maxlength="10"/></td>
+                        </tr>
+
+
+
+                        <tr height="40">
+                            <td colspan="2" align="center">
+                                <button type="submit" class="button">Sign Up</button>
+                                <button type="button" class="button" onclick="location.href='login.html'">Back to Login</button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        function showFields() {
+            var customerType = document.getElementById("customerType").value;
+            document.getElementById("individualFName").style.display = (customerType == 'I') ? "" : "none";
+            document.getElementById("individualLName").style.display = (customerType == 'I') ? "" : "none";
+            document.getElementById("individualDlnum").style.display = (customerType == 'I') ? "" : "none";
+            document.getElementById("individualInsurance").style.display = (customerType == 'I') ? "" : "none";
+            document.getElementById("individualPolicynum").style.display = (customerType == 'I') ? "" : "none";
+
+
+            document.getElementById("corporationName").style.display = (customerType == 'C') ? "" : "none";
+            document.getElementById("corporationRegnum").style.display = (customerType == 'C') ? "" : "none";
+        }
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            var email = document.getElementById('email').value;
+            var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            if(!regex.test(email)) {
+                alert('Please enter a valid email address.');
+                e.preventDefault();
+            }
+        });
+
+        </script>
+</body>
+</html>
